@@ -17,20 +17,17 @@
 <body class="flex h-screen touch-manipulation select-none">
 
 <main id="app" class="m-auto w-96" v-cloak>
-    
+
+    <ul class="grid grid-cols-2 gap-4 p-3">
+        <template v-for="radical in radicals">
+            <li class="border text-center" v-bind:class=" {'border-4': radical.radicalIdx === cursorIdx}">{{radical.images[radical.kindIdx]}}</li>
+        </template>
+    </ul>
+
     <div>
         <p>key: {{key}}</p>
         <p>keyCode: {{keyCode}}</p>
     </div>
-    
-    <ul class="grid grid-cols-2 gap-4 p-3">
-        <li>
-            a
-        </li>
-        <li>
-            b
-        </li>
-    </ul>
 </main>
 
 <script src="https://cdn.tailwindcss.com"></script>
