@@ -1,5 +1,5 @@
 // params
-var ANSWERS = ["00", "11", "22", "33", "01", "10"];
+var ANSWERS = ["l_0-r_0", "l_1-r_1", "l_2-r_2", "l_3-r_3", "l_0-r_1", "l_1-r_0"];
 var LEFT = ["l_0", "l_1", "l_2", "l_3"];
 var RIGHT = ["r_0", "r_1", "r_2", "r_3"];
 // --
@@ -22,8 +22,12 @@ var app = new Vue({
             });
         }
         
-        this.radicals[0].images = LEFT;
-        this.radicals[1].images = RIGHT;
+        this.radicals[0].images = shuffleArray(LEFT);
+        this.radicals[1].images = shuffleArray(RIGHT);
+
+        function shuffleArray(inputArray){
+            return inputArray.sort(()=> Math.random() - 0.5);
+        }
     },
     mounted() {
         document.addEventListener('keydown', this.onKeyDown)
@@ -38,8 +42,19 @@ var app = new Vue({
             
             // Judge
             if (event.key === "Enter") {
-                this.log = judge(this.radicals);
+                if (judge(this.radicals)) {
+                    this.radicals.forEach(e => {
+                        let target = e.images.splice(e.kindIdx, 1);
+                        e.images = e.images.filter(n => n !== target);
+                        console.log(e.images.length);
+                    });
+                }
+                else {
+                    console.log("false");
+                }
             }
+            
+            
             
             // --
             this.cursorIdx += getCursorChange(event.key, this.cursorIdx);
@@ -80,9 +95,10 @@ var app = new Vue({
             
             // --
             function judge(radicals) {
-                let a = radicals[0].kindIdx + "";
-                let b = radicals[1].kindIdx + "";
-                return ANSWERS.includes(a + b);
+                let a = radicals[0].images[radicals[0].kindIdx] + "";
+                let b = radicals[1].images[radicals[1].kindIdx] + "";
+                console.log(a + "-" + b);
+                return ANSWERS.includes(a + "-" + b);
             }
         }
     }
