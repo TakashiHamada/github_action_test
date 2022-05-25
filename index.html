@@ -18,19 +18,17 @@
 
 <main id="app" class="m-auto w-96" v-cloak>
 
-    <ul class="grid grid-cols-2 gap-4 p-3">
+    <ul class="grid grid-cols-2 gap-4 p-3" v-if="0 < radicals[0].images.length">
         <template v-for="radical in radicals">
             <li class="border text-center" v-bind:class=" {'border-4': radical.radicalIdx === cursorIdx}">
                 <img :src="'images/' + radical.images[radical.kindIdx % radical.images.length] + '.png'">
             </li>
         </template>
     </ul>
-
-    <div>
-        <p>key: {{key}}</p>
-        <p>keyCode: {{keyCode}}</p>
-        <p>log: {{log}}</p>
+    <div v-else>
+        <p class="text-blue-600 font-bold">Clear!!</p>
     </div>
+
 </main>
 
 <script src="https://cdn.tailwindcss.com"></script>

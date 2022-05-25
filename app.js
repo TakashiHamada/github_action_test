@@ -6,9 +6,6 @@ var RIGHT = ["r_0", "r_1", "r_2", "r_3"];
 var app = new Vue({
     el: '#app',
     data: {
-        key: "",
-        keyCode: null,
-        log: "",
         radicals: [],
         cursorIdx: 0,
     },
@@ -36,32 +33,26 @@ var app = new Vue({
         document.removeEventListener('keydown', this.onKeyDown)
     },
     methods: {
+        isClear() {
+            return true;//this.radicals[0].images.length === 0;
+        },
         onKeyDown(event) {
-            this.key = event.key
-            this.keyCode = event.keyCode
-            
             // Judge
             if (event.key === "Enter") {
                 if (judge(this.radicals)) {
                     this.radicals.forEach(e => {
                         let target = e.images.splice(e.kindIdx, 1);
                         e.images = e.images.filter(n => n !== target);
-                        console.log(e.images.length);
+                        if (0 < e.kindIdx)
+                            e.kindIdx--;
                     });
                 }
-                else {
-                    console.log("false");
-                }
             }
-            
-            
-            
             // --
             this.cursorIdx += getCursorChange(event.key, this.cursorIdx);
 
             let target = this.radicals.filter(radical => radical.radicalIdx === this.cursorIdx)[0];
             target.kindIdx = getKindIdx(event.key, target);
-
             // --
             function getCursorChange(key, current) {
                 switch (key) {
@@ -97,7 +88,6 @@ var app = new Vue({
             function judge(radicals) {
                 let a = radicals[0].images[radicals[0].kindIdx] + "";
                 let b = radicals[1].images[radicals[1].kindIdx] + "";
-                console.log(a + "-" + b);
                 return ANSWERS.includes(a + "-" + b);
             }
         }
