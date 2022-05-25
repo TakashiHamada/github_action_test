@@ -3,6 +3,7 @@ var app = new Vue({
     data: {
         key: "",
         keyCode: null,
+        log: "",
         radicals: [],
         cursorIdx: 0,
     },
@@ -26,6 +27,12 @@ var app = new Vue({
         onKeyDown(event) {
             this.key = event.key
             this.keyCode = event.keyCode
+            
+            // Judge
+            if (event.key === "Enter") {
+                this.log = judge(this.radicals);
+            }
+            
             // --
             this.cursorIdx += getCursorChange(event.key, this.cursorIdx);
 
@@ -61,6 +68,16 @@ var app = new Vue({
                         break;
                 }
                 return value; 
+            }
+            
+            // --
+            function judge(radicals) {
+                // --
+                let answer = ["01", "33", "42"]; // param
+                // --
+                let a = radicals[0].kindIdx + "";
+                let b = radicals[1].kindIdx + "";
+                return answer.includes(a + b);
             }
         }
     }
