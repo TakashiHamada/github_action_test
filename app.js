@@ -33,8 +33,8 @@ var app = new Vue({
         document.removeEventListener('keydown', this.onKeyDown)
     },
     methods: {
-        isClear() {
-            return true;//this.radicals[0].images.length === 0;
+        reload() {
+            location.reload();
         },
         onKeyDown(event) {
             // Judge
