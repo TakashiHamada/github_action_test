@@ -1,3 +1,8 @@
+// params
+var ANSWERS = ["00", "11", "22", "33", "01", "10"];
+var LEFT = ["l_0", "l_1", "l_2", "l_3"];
+var RIGHT = ["r_0", "r_1", "r_2", "r_3"];
+// --
 var app = new Vue({
     el: '#app',
     data: {
@@ -12,10 +17,13 @@ var app = new Vue({
         for (let idx = 0; idx < 2; idx++) {
             this.radicals.push({
                 radicalIdx: idx,
-                images: ['A', 'B', 'C', 'D', 'E'],
+                images: [],
                 kindIdx: 0,
             });
         }
+        
+        this.radicals[0].images = LEFT;
+        this.radicals[1].images = RIGHT;
     },
     mounted() {
         document.addEventListener('keydown', this.onKeyDown)
@@ -72,12 +80,9 @@ var app = new Vue({
             
             // --
             function judge(radicals) {
-                // --
-                let answer = ["01", "33", "42"]; // param
-                // --
                 let a = radicals[0].kindIdx + "";
                 let b = radicals[1].kindIdx + "";
-                return answer.includes(a + b);
+                return ANSWERS.includes(a + b);
             }
         }
     }

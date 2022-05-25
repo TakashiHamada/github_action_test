@@ -20,7 +20,9 @@
 
     <ul class="grid grid-cols-2 gap-4 p-3">
         <template v-for="radical in radicals">
-            <li class="border text-center" v-bind:class=" {'border-4': radical.radicalIdx === cursorIdx}">{{radical.images[radical.kindIdx]}}</li>
+            <li class="border text-center" v-bind:class=" {'border-4': radical.radicalIdx === cursorIdx}">
+                <img :src="'images/' + radical.images[radical.kindIdx] + '.png'">
+            </li>
         </template>
     </ul>
 
